@@ -15,7 +15,10 @@ print(f"X_train shape: {X_train.shape}")
 print(f"Y_train shape: {Y_train.shape}")
 
 model = models.Sequential([
-    layers.Flatten(input_shape = (28,28)),
+    layers.Conv2D(32, (3, 3), activation='relu', input_shape=(28, 28, 1)),
+    layers.MaxPooling2D((2, 2)),
+    layers.Conv2D(64, (3, 3), activation='relu'),
+    layers.Flatten(),
     layers.Dense(60, activation="relu"),
     layers.Dense(10, activation='softmax')
 ])
@@ -28,4 +31,21 @@ model.fit(X_train, Y_train, epochs=10, validation_split=0.2)
 
 
 test_loss, test_acc = model.evaluate(X_test, Y_test)
+
+
+y_pred = model.predict(X_test)
+y_pred_labels = (y_pred > 0.5).astype(int).flatten()
+
+# Find incorrect predictions
+failed_indices = np.where(y_pred_labels != Y_test)[0]
+
+print(f"Failed samples: {len(failed_indices)}")
+
+for idx in failed_indices[:10]:
+    print(
+        f"Index={idx}, "
+        f"True={Y_test[idx]}, "
+        f"Pred={y_pred_labels[idx]}, "
+        f"Prob={y_pred[idx][0]:.4f}"
+    )
 print(f'Test accuracy: {test_acc}')
