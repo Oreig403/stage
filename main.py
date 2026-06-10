@@ -15,13 +15,13 @@ print(f"X_train shape: {X_train.shape}")
 print(f"Y_train shape: {Y_train.shape}")
 
 model = models.Sequential([
-    layers.Flatten(input_shape = (8,8)),
-    layers.Dense(32, activation="relu"),
+    layers.Flatten(input_shape = (28,28)),
+    layers.Dense(60, activation="relu"),
     layers.Dense(10, activation='softmax')
 ])
 
 model.compile(optimizer='adam',
-              loss='categorical_crossentropy',
+              loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 
 model.fit(X_train, Y_train, epochs=10, validation_split=0.2)
