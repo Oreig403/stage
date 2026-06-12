@@ -7,15 +7,18 @@ from sklearn.model_selection import train_test_split
 from keras.utils import to_categorical
 from keras import layers, models
 
-def show_img(arr, vmin = 0, vmax = 255):
+def show_img(arr, vmin = 0, vmax = 255, filename = None):
     plt.imshow(arr, interpolation='nearest', cmap='gray', vmin=vmin, vmax=vmax)
+    if filename:
+        plt.savefig(filename)
     plt.show()
 
 # 1. Load the dataset
 digits = load_digits()
 X = digits.images  # Shape: (1797, 8, 8)
 Y = digits.target  # Shape: (1797,)
-
+show_img(X[203], 0, 16, "example.png")
+print("Associée :", Y[203])
 X = X / 16.0 
 
 # 3. One-hot encode the labels for Keras
@@ -29,7 +32,8 @@ print(f"Y_train shape: {Y_train.shape}")
 
 model = models.Sequential([
     layers.Flatten(input_shape = (8,8)),
-    layers.Dense(32, activation="relu"),
+    layers.Dense(50, activation="relu"),
+    layers.Dense(30, activation="relu"),
     layers.Dense(10, activation='softmax')
 ])
 
