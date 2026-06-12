@@ -33,21 +33,21 @@ model.fit(X_train, Y_train, epochs=10, validation_split=0.2)
 test_loss, test_acc = model.evaluate(X_test, Y_test)
 
 
-y_pred = model.predict(X_test)
-y_pred_labels = (y_pred > 0.5).astype(int).flatten()
+# y_pred = model.predict(X_test)
+# y_pred_labels = (y_pred > 0.5).astype(int).flatten()
 
-Y_test_labels = np.argmax(Y_test, axis=1)
+# Y_test_labels = np.argmax(Y_test, axis=1)
 
-failed_indices = np.where(y_pred_labels != Y_test_labels)[0]
+# failed_indices = np.where(y_pred_labels != Y_test_labels)[0]
 
-print(f"Failed samples: {len(failed_indices)}")
+# print(f"Failed samples: {len(failed_indices)}")
 
-for idx in failed_indices[:10]:
-    print(
-        f"Index={idx}, "
-        f"True={Y_test[idx]}, "
-        f"Pred={y_pred_labels[idx]}, "
-        f"Prob={y_pred[idx][0]:.4f}"
-    )
-    show_img(X_test[idx])
-print(f'Test accuracy: {test_acc}')
+# for idx in failed_indices[:10]:
+#     print(
+#         f"Index={idx}, "
+#         f"True={Y_test[idx]}, "
+#         f"Pred={y_pred_labels[idx]}, "
+#         f"Prob={y_pred[idx][0]:.4f}"
+#     )
+#     show_img(X_test[idx])
+# print(f'Test accuracy: {test_acc}')
