@@ -7,29 +7,22 @@ from sklearn.model_selection import train_test_split
 from keras.utils import to_categorical
 from keras import layers, models
 
-def show_img(arr, vmin = 0, vmax = 255, filename = None):
-    plt.imshow(arr, interpolation='nearest', cmap='gray', vmin=vmin, vmax=vmax)
-    if filename:
-        plt.savefig(filename)
-    plt.show()
 
-# 1. Load the dataset
+
+# Charger le dataset dans la mémoire
 digits = load_digits()
 X = digits.images  # Shape: (1797, 8, 8)
 Y = digits.target  # Shape: (1797,)
-show_img(X[203], 0, 16, "example.png")
-print("Associée :", Y[203])
 X = X / 16.0 
-
-# 3. One-hot encode the labels for Keras
 Y = to_categorical(Y, num_classes=10)
 
-# 4. Split into training and testing sets
+
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
 
 print(f"X_train shape: {X_train.shape}")
 print(f"Y_train shape: {Y_train.shape}")
 
+# Définition du modele
 model = models.Sequential([
     layers.Flatten(input_shape = (8,8)),
     layers.Dense(50, activation="relu"),
@@ -37,6 +30,7 @@ model = models.Sequential([
     layers.Dense(10, activation='softmax')
 ])
 
+#Entrainer le modèle 
 model.compile(optimizer='adam',
               loss='categorical_crossentropy',
               metrics=['accuracy'])
